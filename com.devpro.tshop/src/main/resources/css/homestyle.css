@@ -1,0 +1,224 @@
+ .top_header{
+    background-color: #f8f9fa;
+    padding: 1% 5%;
+}
+.top_header .row{
+    justify-content: space-around;
+    align-items:center;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+   
+}
+.logo{
+	width: 100%;
+	max-width: 225px;
+}
+.menu_bar{
+
+}
+.menu_bar ul{
+    display: flex;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+    justify-content: space-around;
+    align-items: center;
+    color: #272727;
+    font-size: 18px;
+    font-weight: 500;
+}
+.menu_bar ul li a{
+    color: #272727;
+}
+.menu_bar ul li a:hover{
+    text-decoration:underline red;
+}
+.menu_bar ul li:first-child a{
+    color: red;
+}
+.menu_bar ul li:first-child a:hover{
+    text-decoration:none;
+}
+.user_cart{
+    padding: 0;
+}
+.user_cart  ul{
+    display: flex;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+.user_cart  ul li{
+    padding: 0;
+    width: 50%;
+   
+}
+.user_cart  ul li a{
+    color: #272727;
+    padding: 0.5rem auto;
+    display: flex;
+}
+.user_cart  ul li:first-child a{
+}
+.user_cart  ul li a i{
+    font-size: 25px;
+}
+.user_cart  ul li:last-child{
+    position: relative;
+    display: flex;
+}
+.user_cart  ul li:last-child .number_cart{
+	position: absolute;
+    width: 17px;
+    height: 18px;
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 18px;
+    top: 0;
+    left: 30px;
+}
+
+.slide_bar .control_icon{
+    width: 30px;
+    height: 30px;
+    background-color: red;
+}
+
+.title_category{
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 0;
+    border-bottom: 2px solid;
+}
+.title_category p{
+    margin: 0;
+    padding: 5px;
+    width: 100px;
+}
+.featured_products{
+    padding: 1% 5%;
+    background-color: #e7eaed;
+}
+
+.featured_products ul{
+    display: flex;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+    flex-wrap: wrap;
+    justify-content: space-around;
+} 
+.featured_products ul li{
+    width: 22%;
+    padding: 10px;
+   background-color: white;
+   margin: 15px 0;
+}
+.featured_products ul li .img_product{
+    padding: 0 25px;
+}
+.featured_products ul li .title_product{
+    padding: 10px;
+    height:65px;
+    overflow:hidden;
+}
+.featured_products ul li .title_product a{
+    color: #272727;
+    font-size: 16px;
+    font-weight: 600;
+}
+.featured_products ul li .title_product a:hover{
+    color: red;
+    text-decoration: none;
+}
+.featured_products ul li .price{
+    display: flex;
+    padding: 10px;
+}
+.featured_products ul li .price .main_price span{
+    color: red;
+}
+.featured_products ul li .price .price_compare span{
+    text-decoration: line-through;
+}
+.featured_products ul li .price .sale span{
+    color: red;
+}
+.featured_products ul li .btn_product{
+    display: flex;
+    text-align: center;
+    padding: 10px;
+}
+footer{
+	background-color: #272727;
+	display: flex;
+}
+.foot_left{
+	width: 40%;
+	padding: 3vw;
+}
+.foot_right{
+	margin: 0px;
+    width: 60%;
+
+}
+.foot_right > ul{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	display: flex;
+}
+.foot_right > ul > li{
+	padding: 20px 1vw 0 1vw;
+}
+.foot_right > ul > li > span{
+	color: white;
+	font-size: 1.5vw;
+	font-weight: 600;
+	background-color: #272727;
+}
+.foot_right > ul > li > ul{
+	margin: 10px 0;
+	padding: 0;
+	list-style-type: none;
+}
+.foot_right > ul > li >ul >li{
+	font-size: 1.2vw;
+}
+.foot_right > ul > li:first-child >ul >li a{
+	color: grey;
+}
+.foot_right > ul > li:first-child >ul >li:hover{
+	background-color: #272727;
+}
+.foot_right > ul > li:first-child >ul >li:hover a{
+	color: white;
+}
+.foot_right > ul > li:nth-child(2) >ul >li{
+	color: grey;
+}
+.foot_right > ul > li:last-child .btn{
+	background-color: red;
+    color: white;
+    border: none;
+}
+.foot_right > ul > li:last-child p{
+	color: grey;
+}
+.social ul{
+	display: flex;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.social > ul > li {
+    margin-right: 2vw;
+    font-size: 3vw;
+}
+.social >ul >li:last-child{
+	margin-right: 0;
+}
