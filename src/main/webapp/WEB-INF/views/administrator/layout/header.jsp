@@ -8,6 +8,8 @@
 			href="#" role="button"><i class="fas fa-bars"></i></a></li>
 		<li class="nav-item d-none d-sm-inline-block"><a
 			href="${base }/homepage" class="nav-link">Trang chủ</a></li>
+		<li class="nav-item d-none d-sm-inline-block"><a
+			href="${base }/logout" class="nav-link">Logout</a></li>
 	</ul>
 
 	<!-- Right navbar links -->

@@ -5,6 +5,40 @@
 .category_container{
 	padding: 0 7%;
 }
+.img_product{
+    padding: 0 40px;
+}
+ .title_product{
+    padding: 20px;
+    height:65px;
+    overflow:hidden;
+}
+.title_product a{
+    color: #272727;
+    font-size: 16px;
+    font-weight: 600;
+}
+.title_product a:hover{
+    color: red;
+    text-decoration: none;
+}
+ .price{
+    display: flex;
+    padding: 20px;
+}
+ .price .main_price span{
+    color: red;
+}
+ .price .price_compare span{
+    text-decoration: line-through;
+}
+ .price .sale span{
+    color: red;
+}
+ .btn_product{
+    display: flex;
+    text-align: center;
+}
 .bloc_left_price {
     color: #c01508;
     text-align: center;

@@ -38,12 +38,12 @@
 		<!-- dữ liệu để search -->
 				<div class="d-flex flex-row justify-content-between mt-4">
 					
-<!-- 					<div class="d-flex flex-row"> -->
+					<div class="d-flex flex-row">
 <!-- 						dữ liệu để thực hiện tìm kiếm sản phẩm -->
-<!-- 						<input type="hidden" id="page" name="page"> -->
-<%-- 						<input type="text" id="keyword" name="keyword" class="form-control" placeholder="Search" value="${searchModel.keyword }"> --%>
-<!-- 						<button type="submit" id="btnSearch" name="btnSearch" value="Search"  class="btn btn-primary">Seach</button> -->
-<!-- 					</div> -->
+						<input type="hidden" id="page" name="page">
+						<input type="text" id="keyword" name="keyword" class="form-control" placeholder="Search" value="${searchModel.keyword }">
+						<button type="submit" id="btnSearch" name="btnSearch" value="Search"  class="btn btn-primary">Seach</button>
+					</div>
 					
 					<div>
 						<a class="btn btn-outline-primary mb-1" href="${base }/admin/category/addOrUpdate" role="button">Add New</a>

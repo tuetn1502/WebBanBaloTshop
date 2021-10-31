@@ -37,17 +37,18 @@ public class AdminCategoryController extends BaseController {
 	@RequestMapping(value = { "/admin/category/list" }, method = RequestMethod.GET)
 	public String getAdminProductList(final Model model, final HttpServletRequest request,
 			final HttpServletResponse response) throws IOException {
-		Categories category = new Categories();
-		model.addAttribute("category",category);
-		model.addAttribute("categories", categoryService.findAll());
+//		Categories category = new Categories();
+//		model.addAttribute("category",category);
+//		model.addAttribute("categories", categoryService.findAll());
 		
 		
 		CategorySearchModel searchModel = new CategorySearchModel();
 		searchModel.setKeyword(request.getParameter("keyword"));
 		searchModel.setPage(getCurrentPage(request));
 		searchModel.setCategoryId(getInterger(request, "categoryId"));
-		model.addAttribute("categoryWithPaging",categoryService.search(searchModel));
 		model.addAttribute("searchModel",searchModel);
+		model.addAttribute("categoryWithPaging",categoryService.search(searchModel));
+		
 		// MVC được cấu hình chỉ định vào thư mục /src/main/webapp/WEB-INF/views
 		// để tìm các views
 		// /WEB-INF/views/user/index.jsp
@@ -63,10 +64,6 @@ public class AdminCategoryController extends BaseController {
 
 		Categories category = new Categories();
 		model.addAttribute("category",category);
-//		model.addAttribute("categories", categoryService.findAll());
-		// MVC được cấu hình chỉ định vào thư mục /src/main/webapp/WEB-INF/views
-		// để tìm các views
-		// /WEB-INF/views/user/index.jsp
 		return "administrator/categoryAddOrUpdate"; // -> đường dẫn tới View.
 	}
 	@RequestMapping(value = { "/admin/category/addOrUpdate" }, method = RequestMethod.POST)
@@ -90,7 +87,6 @@ public class AdminCategoryController extends BaseController {
 				String sql ="SELECT * FROM balotshop.tbl_category where tbl_category.name = '"+newCategory.getName()+"';";
 				System.out.println(sql);
 				category =categoryService.getByTransactQuerySQL(sql);
-//				Categories category =categoryService.getByTransactQuerySQL(sql);
 				
 				if (category == null) { //Nếu không có thì tạo mới category
 					category = new Categories();
@@ -166,6 +162,11 @@ public class AdminCategoryController extends BaseController {
 
 //		System.out.println(productService.search(productSearchModel));
 		model.addAttribute("productWithPaging",productService.searchByParentID(productSearchModel));
+//		CategorySearchModel searchModel = new CategorySearchModel();
+		productSearchModel.setKeyword(request.getParameter("keyword"));
+		productSearchModel.setPage(getCurrentPage(request));
+		productSearchModel.setCategoryId(getInterger(request, "categoryId"));
+		model.addAttribute("searchModel",productSearchModel);
 		return "administrator/productList"; // -> đường dẫn tới View
 
 	}

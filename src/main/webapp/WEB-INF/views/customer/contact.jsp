@@ -22,41 +22,43 @@
 	
 	<section class="jumbotron ">
 		
-	    <div class="container">
-	        <h1 class="jumbotron-heading">E-COMMERCE CONTACT</h1>
-	        <p class="lead text-muted mb-0">Contact Page build with Bootstrap 4 !</p>
-	    </div>
+<!-- 	    <div class="container"> -->
+<!-- 	        <h1 class="jumbotron-heading">E-COMMERCE CONTACT</h1> -->
+<!-- 	        <p class="lead text-muted mb-0">Contact Page build with Bootstrap 4 !</p> -->
+<!-- 	    </div> -->
 	    
 		<div class="container">
 		    <div class="row">
 		        <div class="col">
 		            <div class="card">
-		                <div class="card-header bg-primary text-white"><i class="fa fa-envelope"></i> Contact us.
+		                <div class="card-header bg-primary text-white"><i class="fa fa-envelope"></i> Phản hồi về shop
 		                </div>
 		                <div class="card-body">
-		                    <form>
+		                    <sf:form id="contact-Spring-form" name="contact-form" action="${base}/contact"
+								method="POST" modelAttribute="contact">
 		                        <div class="form-group">
-		                            <label for="name">Name</label>
-		                            <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter name" required>
+		                            <label for="name">Họ tên</label>
+		                            <sf:input type="text" id="fullname" name="fullname" path="fullname" class="form-control" required=""></sf:input>
 		                        </div>
 		                        <div class="form-group">
-		                            <label for="email">Email address</label>
-		                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
-		                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+		                            <label for="email">Email</label>
+		                            <sf:input type="text" id="email" name="email" path="email" class="form-control" required=""></sf:input>
 		                        </div>
 		                        <div class="form-group">
-		                            <label for="message">Message</label>
-		                            <textarea class="form-control" id="message" rows="6" required></textarea>
+		                            <label for="message">Tin Nhắn</label>
+		                            <sf:textarea type="text" id="message" name="message" path="message" rows="4"
+									class="form-control md-textarea" required=""></sf:textarea>
+		                            
 		                        </div>
 		                        <div class="mx-auto">
-		                        <button type="submit" class="btn btn-primary text-right">Submit</button></div>
-		                    </form>
+		                        <button type="button" class="btn btn-primary text-right" onclick="SaveContact('${base}');" >Lưu</button></div>
+		                    </sf:form>
 		                </div>
 		            </div>
 		        </div>
 		        <div class="col-12 col-sm-4">
 		            <div class="card bg-light mb-3">
-		                <div class="card-header bg-success text-white text-uppercase"><i class="fa fa-home"></i> Address</div>
+		                <div class="card-header bg-success text-white text-uppercase"><i class="fa fa-home"></i> Địa chỉ</div>
 		                <div class="card-body">
 		                    <p>Hà Nội</p>
 		                    <p>Email : tangoctue1502@gmail.com</p>

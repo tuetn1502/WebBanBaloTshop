@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.devpro.tshop.controller.BaseController;
 import com.devpro.tshop.dto.ContactModel;
 import com.devpro.tshop.entities.Contact;
 import com.devpro.tshop.services.ContactService;
 
 @Controller
-public class ContactController {
+public class ContactController extends BaseController {
 	@RequestMapping(value = { "/contact" }, method = RequestMethod.GET)
 	public String get_contact(final Model model,final HttpServletRequest request,
 			final HttpServletResponse response) throws IOException{
@@ -76,12 +77,13 @@ public class ContactController {
 	public ResponseEntity<Map<String, Object>> ajax_contact(final Model model
 			,final HttpServletRequest request
 			,final HttpServletResponse response
-			,final @RequestBody ContactModel contactModel){
+			,final @RequestBody Contact contact){
 		
-		System.out.println("ContactModel[Email]:"+contactModel.getEmail());
+//		System.out.println("ContactModel[Email]:"+contactModel.getEmail());
+//		contactService.saveOrUpdate(contact);
 		Map<String, Object> jsonResult = new HashMap<String, Object>();
 //		jsonResult.put("code",200);
-		jsonResult.put("message",contactModel);
+		jsonResult.put("message",contact);
 		return ResponseEntity.ok(jsonResult);
 		
 	}

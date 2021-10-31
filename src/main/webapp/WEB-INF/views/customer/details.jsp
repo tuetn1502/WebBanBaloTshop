@@ -33,7 +33,7 @@
 	        <div class="col-md-12">
 	            <div class="card">
 	                <div class="row product_detail">
-	                    <div class="col-md-6">
+	                    <div class="col-md-6 border">
 	                        <div class="images p-3">
 	                            <div class="text-center p-4"> <img id="main-image" src="${base }/upload/${detailProduct.avatar}" width="250" /> </div>
 <!-- 	                            <div class="thumbnail text-center"> <img onclick="change_image(this)" src="https://i.imgur.com/Rx7uKd0.jpg" width="70"> <img onclick="change_image(this)" src="https://i.imgur.com/Dhebu4F.jpg" width="70"> </div> -->
@@ -61,7 +61,7 @@
 	                                </div>
 	                            </div>
 	                            <p class="about">${detailProduct.detailDescription}</p>
-	                            <div class="cart mt-4 align-items-center"> <button class="btn btn-danger text-uppercase mr-2 px-4">Add to cart</button> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
+	                            <div class="cart mt-4 align-items-center"> <button class="btn btn-danger text-uppercase mr-2 px-4" onclick="addToCart(${detailProduct.id}, 1);">Thêm vào giỏ hàng</button> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
 	                        </div>
 	                    </div>
 	                </div>

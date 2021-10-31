@@ -43,6 +43,25 @@
 				data-widget="treeview" role="menu" data-accordion="false">
 				<!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+               <li class="nav-item">
+		            <a  class="nav-link">
+		              <i class="nav-icon fas fa-copy"></i>
+		              <p>
+		                Quản lý tài khoản
+		                <i class="fas fa-angle-left right"></i>
+		              </p>
+		            </a>
+		            <ul class="nav nav-treeview"> 		            	
+						<c:forEach items="${roleUsers.getData() }" var="o">
+		              		<li class="nav-item"  id="categoryId">
+		                		<a href="${base }/admin/account/${o.name}" class="nav-link ">
+		                		<i class="far fa-circle nav-icon"></i>
+		                  			<p value="${o.id }">${o.name }</p>
+		                		</a>
+		              		</li>
+	              		</c:forEach>
+	            	</ul>
+	          	</li>
 				<li class="nav-item">
 		            <a href="${base }/admin/category/list" class="nav-link">
 		              <i class="nav-icon fas fa-copy"></i>

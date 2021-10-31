@@ -38,6 +38,7 @@ public abstract class BaseService<E extends BaseEntity> implements Constants {
 		} else {
 			return entityManager.merge(entity); // cập nhật
 		}
+		
 	}
 
 	/**
@@ -68,7 +69,16 @@ public abstract class BaseService<E extends BaseEntity> implements Constants {
 	public E getById(int id) {
 		return entityManager.find(clazz(), id);
 	}
-
+	
+	/**
+	 * Lấy bản ghi trong cơ sở dữ liệu theo name.
+	 * @param id
+	 * @return
+	 */
+	@Transactional
+	public E getByName(String name) {
+		return entityManager.find(clazz(), name);
+	}
 	/**
 	 * thực thi câu lệnh truy vấn cơ sở dữ liệu và trả về duy nhất 1 kết quả
 	 * @param sql -> ví dụ chạy câu lệnh [SELECT * FROM tbl_category WHERE name='Java';]

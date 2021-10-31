@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Điện thoại</title>
+<title>${curentCategory.name}</title>
 <jsp:include page="/WEB-INF/views/common/variables.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/customer/layout/css.jsp"></jsp:include>
 </head>
@@ -26,146 +26,66 @@
 		<div class="top_main">
 			<nav aria-label="breadcrumb">
 			  	<ol class="breadcrumb ">
-				    <li class="breadcrumb-item"><a href="./Homepage.html">Trang chủ</a></li>
-				    <li class="breadcrumb-item active" aria-current="page"><a href="./danhmucsanpham.html">Balo</a></li>
+				    <li class="breadcrumb-item"><a href="${base }/homepage">Trang chủ</a></li>
+				    <li class="breadcrumb-item active" aria-current="page"><a href="${base }/category/${curentCategory.seo}">${curentCategory.name}</a></li>
 			  	</ol>
 			</nav>
 		</div>
 	    <div class="row category_product m-0 pt-3">
 	        <div class="col-12 col-sm-3">
 	            <div class="card bg-light mb-3">
-	                <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-list"></i> Categories</div>
+	                <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-list"></i> Danh mục sản phẩm</div>
 	                <ul class="list-group category_block">
-	                    <li class="list-group-item"><a href="category.html">Cras justo odio</a></li>
-	                    <li class="list-group-item"><a href="category.html">Dapibus ac facilisis in</a></li>
-	                    <li class="list-group-item"><a href="category.html">Morbi leo risus</a></li>
-	                    <li class="list-group-item"><a href="category.html">Porta ac consectetur ac</a></li>
-	                    <li class="list-group-item"><a href="category.html">Vestibulum at eros</a></li>
+	                	
+	                		<c:forEach items="${ListCategoryChildOfCurentCategory.data }" var="c">
+	                			<li class="list-group-item"><a href="${base }/category/${c.seo}">${c.name }</a></li>
+	                		</c:forEach>
 	                </ul>
 	            </div>
 	        </div>
 	        <div class="col">
-	            <div class="row">
-	                <div class="col-12 col-md-6 col-lg-4">
-	                    <div class="card">
-	                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-	                        <div class="card-body">
-	                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-	                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-	                            <div class="row">
-	                                <div class="col">
-	                                    <p class="btn btn-danger btn-block">99.00 $</p>
-	                                </div>
-	                                <div class="col">
-	                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-	                                </div>
-	                            </div>
+	            <div class="row m-0">
+	                <c:forEach items="${productWithPaging.data }" var="p">
+	                <div class="col-12 col-md-6 col-lg-4 mb-4">
+	                    <div class="card border">
+	                        <div class="img_product"> <img src="${base }/upload/${p.avatar}" alt="" width="100%"/></div>
+		                     <div class="card-body p-0">
+	                            <div class="title_product"> <a href="${base }/detail/${p.seo}">${p.title }</a></div>
+	                            <div class="price">
+									<div class="main_price mr-2">
+										<span><fmt:setLocale value="vi_VN" scope="session" />
+											<fmt:formatNumber value="${p.price }" type="currency" />
+										</span>
+									</div>
+									<div class="price_compare">
+										<span><fmt:setLocale value="vi_VN" scope="session" />
+											<fmt:formatNumber value="${p.priceSale }" type="currency" />
+										</span>
+										
+									</div>
+<!-- 									<div class="sale ml-5"> -->
+<!-- 										<span>- ?</span> -->
+<!-- 									</div> -->
+								</div>
+								<div class="row p-2 btn_product">
+									<div class="col-md-6 p-0 w-75">
+										<a href="${base }/detail/${p.seo}" class="btn btn-primary w-75">Xem chi tiết</a>
+									</div>
+									<div class="col-md-6 p-0">
+										<button type="button" class="btn btn-danger  w-75" onclick="addToCart(${p.id}, 1);">Thêm vào giỏ</button>
+									</div>
+								</div>
 	                        </div>
 	                    </div>
 	                </div>
-	                <div class="col-12 col-md-6 col-lg-4">
-	                    <div class="card">
-	                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-	                        <div class="card-body">
-	                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-	                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-	                            <div class="row">
-	                                <div class="col">
-	                                    <p class="btn btn-danger btn-block">99.00 $</p>
-	                                </div>
-	                                <div class="col">
-	                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-12 col-md-6 col-lg-4">
-	                    <div class="card">
-	                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-	                        <div class="card-body">
-	                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-	                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-	                            <div class="row">
-	                                <div class="col">
-	                                    <p class="btn btn-danger btn-block">99.00 $</p>
-	                                </div>
-	                                <div class="col">
-	                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-12 col-md-6 col-lg-4">
-	                    <div class="card">
-	                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-	                        <div class="card-body">
-	                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-	                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-	                            <div class="row">
-	                                <div class="col">
-	                                    <p class="btn btn-danger btn-block">99.00 $</p>
-	                                </div>
-	                                <div class="col">
-	                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-12 col-md-6 col-lg-4">
-	                    <div class="card">
-	                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-	                        <div class="card-body">
-	                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-	                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-	                            <div class="row">
-	                                <div class="col">
-	                                    <p class="btn btn-danger btn-block">99.00 $</p>
-	                                </div>
-	                                <div class="col">
-	                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-12 col-md-6 col-lg-4">
-	                    <div class="card">
-	                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-	                        <div class="card-body">
-	                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-	                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-	                            <div class="row">
-	                                <div class="col">
-	                                    <p class="btn btn-danger btn-block">99.00 $</p>
-	                                </div>
-	                                <div class="col">
-	                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-12">
-	                    <nav aria-label="...">
-	                        <ul class="pagination">
-	                            <li class="page-item disabled">
-	                                <a class="page-link" href="#" tabindex="-1">Previous</a>
-	                            </li>
-	                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                            <li class="page-item active">
-	                                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-	                            </li>
-	                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                            <li class="page-item">
-	                                <a class="page-link" href="#">Next</a>
-	                            </li>
-	                        </ul>
-	                    </nav>
-	                </div>
+	                </c:forEach>
 	            </div>
+	            <!-- Paging -->
+	            <div class="row">
+					<div class="col-12 d-flex justify-content-center">
+						<div id="paging"></div>
+					</div>
+				</div>
 	        </div>
 	
 	    </div>
@@ -174,4 +94,18 @@
 	<jsp:include page="/WEB-INF/views/customer/layout/footer.jsp"></jsp:include>
 </body>
 <jsp:include page="/WEB-INF/views/customer/layout/js.jsp"></jsp:include>
+<script type="text/javascript">
+	$( document ).ready(function() {
+		$("#paging").pagination({
+			currentPage: ${productWithPaging.currentPage},
+	        items: ${productWithPaging.totalItems},
+	        itemsOnPage: 5,
+	        cssStyle: 'dark-theme',
+	        onPageClick: function(pageNumber, event) {
+	        	$('#page').val(pageNumber);
+	        	$('#btnSearch').trigger('click');						
+			}
+	    });
+	});
+</script>
 </html>

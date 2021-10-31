@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Built-By: AD
 Build-Jdk: 16.0.2
-Implementation-Title: com.devpro.learn_backend Maven Webapp
+Implementation-Title: com.devpro.tshop Maven Webapp
 Implementation-Version: 0.0.1-SNAPSHOT
 Implementation-Vendor-Id: com.devpro
 Implementation-URL: http://maven.apache.org

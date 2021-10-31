@@ -19,8 +19,15 @@ public class CategoryService extends BaseService<Categories> {
 		String sql = "SELECT * FROM balotshop.tbl_category c WHERE 1=1";
 		if (searchModel != null) {
 			
+			if (searchModel.getCategoryId() != null) {
+				sql += " and c.category_id = "+searchModel.getCategoryId();
+			}
 			if (!StringUtils.isEmpty(searchModel.getSeo())) {
 				sql += " and c.seo = '"+searchModel.getSeo()+"'";
+			}
+			if (!StringUtils.isEmpty(searchModel.getKeyword())) {
+				sql += " and (c.name like '%"+ searchModel.getKeyword()+"%'"+"or c.description like '%"
+						+ searchModel.getKeyword()+ "%')";
 			}
 		}
 		return runTransactQuerySQL(sql, searchModel ==null?0:searchModel.getPage());

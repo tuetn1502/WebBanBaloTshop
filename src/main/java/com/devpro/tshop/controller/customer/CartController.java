@@ -27,6 +27,7 @@ import com.devpro.tshop.dto.CartItem;
 import com.devpro.tshop.entities.Products;
 import com.devpro.tshop.entities.SaleOrder;
 import com.devpro.tshop.entities.SaleOrderProducts;
+import com.devpro.tshop.entities.Users;
 import com.devpro.tshop.services.ProductService;
 import com.devpro.tshop.services.SaleOrderService;
 @Controller
@@ -51,10 +52,11 @@ public class CartController extends BaseController{
 		//lấy danh sách sản phẩm trong giỏ hàng
 		List<CartItem> cartItems = cart.getCartItems();
 
-		BigDecimal total = BigDecimal.ZERO;;
+		BigDecimal total = BigDecimal.ZERO;
 		for (CartItem item : cartItems) {
 			total = total.add(item.getPriceUnit().multiply(BigDecimal.valueOf(item.getQuality())));
 		}
+		cart.setTotalPrice(total);
 	}
 	private int getTotalItems(final HttpServletRequest request) {
 		HttpSession httpSession = request.getSession();
@@ -66,12 +68,12 @@ public class CartController extends BaseController{
 		Cart cart = (Cart) httpSession.getAttribute("cart");
 		List<CartItem> cartItems = cart.getCartItems();
 
-		int total = 0;
+		int totalItems = 0;
 		for (CartItem item : cartItems) {
-			total += item.getQuality();
+			totalItems += item.getQuality();
 		}
 
-		return total;
+		return totalItems;
 	}
 	
 	@RequestMapping(value = { "/ajax/addToCart" }, method = RequestMethod.POST)
@@ -113,7 +115,9 @@ public class CartController extends BaseController{
 
 			cart.getCartItems().add(cartItem);
 		}
-
+		
+		//Tính tổng tiền
+		this.calculateTotalPrice(request);
 		Map<String, Object> jsonResult = new HashMap<String, Object>();
 		jsonResult.put("code", 200);
 		jsonResult.put("status", "TC");
@@ -141,10 +145,10 @@ public class CartController extends BaseController{
 	@RequestMapping(value = { "/ajax/deleteCartItems" }, method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> ajax_DeleteItem(final Model model, final HttpServletRequest request,
 			final HttpServletResponse response, final @RequestBody CartItem cartItem) {
-	
 		HttpSession session = request.getSession();
 		Cart cart = (Cart) session.getAttribute("cart");
 		List<CartItem> cartItems = cart.getCartItems();
+		System.out.println(cart.getTotalPrice());
 		CartItem cartItem2 = null;
 		for (CartItem cItems : cartItems) {
 			if (cartItem.getProductId() == cItems.getProductId()) {
@@ -153,11 +157,16 @@ public class CartController extends BaseController{
 			}
 		}
 		cart.getCartItems().remove(cartItem2);
+		this.calculateTotalPrice(request);
 		Map<String, Object> jsonResult = new HashMap<String, Object>();
 		jsonResult.put("code", 200);
 		jsonResult.put("status", "TC");
 		jsonResult.put("totalItems", getTotalItems(request));
-
+		jsonResult.put("totalPrice", cart.getTotalPrice());
+		System.out.println(cart.getTotalPrice());
+		if (cart.getCartItems().isEmpty()) {
+			session.removeAttribute("cart");
+		}
 		session.setAttribute("totalItems", getTotalItems(request));
 		return ResponseEntity.ok(jsonResult);
 		
@@ -177,13 +186,28 @@ public class CartController extends BaseController{
 		String customerEmail = request.getParameter("customerEmail");
 		String customerPhone = request.getParameter("customerPhone");
 		String customerNote = request.getParameter("customerNote");
-		System.out.println(customerFullName+ customerAddress+customerEmail+customerPhone+customerNote);
+		
+//		System.out.println(getUserLogined().getId()+" "+getUserLogined().getFullname());
 		//tạo hóa đơn
 		SaleOrder saleOrder = new SaleOrder();
-		saleOrder.setCustomerName(customerFullName);
-		saleOrder.setCustomerEmail(customerEmail);
-		saleOrder.setCustomerAddress(customerAddress);
-		saleOrder.setCustomerPhone(customerPhone);
+		
+		//kiểm tra khách hàng đã login hay chưa
+		if (super.isLogined()) {
+			Users userLogined = super.getUserLogined();
+			saleOrder.setUser(userLogined);
+			saleOrder.setCustomerName(userLogined.getFullname());
+			saleOrder.setCustomerEmail(userLogined.getEmail());
+			saleOrder.setCustomerAddress(userLogined.getAddress());
+			saleOrder.setCustomerPhone(userLogined.getPhone());
+		}else {
+			saleOrder.setCustomerName(customerFullName);
+			saleOrder.setCustomerEmail(customerEmail);
+			saleOrder.setCustomerAddress(customerAddress);
+			saleOrder.setCustomerPhone(customerPhone);
+		}
+		
+		
+//		saleOrder.setTotal();
 		
 		//mã hóa đơn
 		saleOrder.setCode(String.valueOf(System.currentTimeMillis()));
@@ -197,6 +221,12 @@ public class CartController extends BaseController{
 		//kết các sản phẩm trong giỏ hàng cho hóa đơn
 		HttpSession session = request.getSession();
 		Cart cart = (Cart) session.getAttribute("cart");
+		int totalMoneyOfOrder = Integer.valueOf(cart.getTotalPrice().intValue()) +super.shipFee();
+		
+		BigDecimal total = new BigDecimal(totalMoneyOfOrder);
+		System.out.println(total);
+		
+		saleOrder.setTotal(total);
 		for(CartItem cartItem : cart.getCartItems()) {
 			SaleOrderProducts saleOrderProducts = new SaleOrderProducts();
 			saleOrderProducts.setProduct(productService.getById(cartItem.getProductId()));

@@ -10,3 +10,9 @@
 <link rel="stylesheet" href="${base }/css/cart.css">
 <link rel="stylesheet" href="${base }/css/contact.css">
 <link rel="stylesheet" href="${base }/css/category.css">
+<link rel="stylesheet" href="${base }/css/signup.css">
+<link rel="stylesheet" href="${base }/lib/owlcarousel/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="${base }/lib/owlcarousel/assets/owl.theme.default.min.css">
+
+<link rel="stylesheet" href="${base }/lib/datepicker.css">
+ <link type="text/css" rel="stylesheet" href="${base}/dist/css/simplePagination.css"/>

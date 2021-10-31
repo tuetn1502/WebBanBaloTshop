@@ -33,7 +33,7 @@
 		
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<p>Đây là phần content ${abcd }</p>
+<%-- 			<p>Đây là phần content ${abcd }</p> --%>
 			<c:forEach items="${categoryList }" var="o">
 				<p>${o.name }</p>
 			</c:forEach>

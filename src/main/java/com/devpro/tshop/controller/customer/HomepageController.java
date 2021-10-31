@@ -1,6 +1,7 @@
 package com.devpro.tshop.controller.customer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,9 @@ import com.devpro.tshop.entities.Products;
 import com.devpro.tshop.services.CategoryService;
 import com.devpro.tshop.services.ProductService;
 
+import net.bytebuddy.asm.Advice.This;
+import net.bytebuddy.implementation.bind.annotation.Super;
+
 @Controller // là 1 BEAN cho loại Controller.
 public class HomepageController extends BaseController{
 	
@@ -37,14 +41,20 @@ public class HomepageController extends BaseController{
 	private ProductService productService;
 	// định nghĩa các action
 	@RequestMapping(value = { "/homepage" }, method = RequestMethod.GET)
-	public String home(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response)
+	public String home(final Model model, final HttpServletRequest request, final HttpServletResponse response)
 			throws IOException {
 		ContactModel contactModel =new ContactModel();
 		model.addAttribute("contactModel",contactModel);
-		List<Products> products = productService.findAll();
-
+//		List<Products> productList = productService.findAll();
+		List<Products> productList = new ArrayList<Products>();
+		
 		// gửi danh sách products xuống views
-		model.addAttribute("productList", products);
+		model.addAttribute("productList", productList);
+		
+		//search theo ishot
+		ProductSearchModel productSearchModel = new ProductSearchModel();
+		model.addAttribute("productWithPaging",productService.searchHotProduct(productSearchModel));
+		
 //		HttpSession session = request.getSession();
 //		session.setAttribute("totalItems", "0");
 		return "customer/homepage"; // -> đường dẫn tới View
@@ -74,6 +84,51 @@ public class HomepageController extends BaseController{
 		return "customer/categoryProducts"; // -> đường dẫn tới View
 
 	}
+	@RequestMapping(value = { "/search" }, method = RequestMethod.POST)
+	public String getSearch(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response)
+			throws IOException {
+		String keyword = request.getParameter("searchHome");
+		System.out.println(keyword);
+		ProductSearchModel productSearchModel = new ProductSearchModel();
+		productSearchModel.setKeyword(keyword);
+		model.addAttribute("keyword",keyword);
+		model.addAttribute("productWithPaging",productService.searchHome(productSearchModel));
+		return "customer/searchProduct"; // -> đường dẫn tới View
+
+	}
+	@RequestMapping(value = { "/category/{seo}" }, method = RequestMethod.GET)
+	public String getCategory1(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response
+			,@PathVariable("seo") String seo)
+			throws IOException {
+		System.out.println(seo);
+		CategorySearchModel categorySearchModel = new CategorySearchModel();
+		categorySearchModel.setSeo(seo);
+		
+//		System.out.println(categorySearchModel);
+		Categories categories = categoryService.search(categorySearchModel).getData().get(0);
+//		int id =categories.getParentId().getId();
+		ProductSearchModel productSearchModel = new ProductSearchModel();
+		if (categories.getParentId()== null) {
+			
+			
+			productSearchModel.setCategoryId(categories.getId());
+			model.addAttribute("productWithPaging",productService.searchByParentID(productSearchModel));
+			
+		}else {
+			productSearchModel.setCategoryId(categories.getId());
+			model.addAttribute("productWithPaging",productService.search(productSearchModel));
+		}
+		System.out.println(categories.getId());
+		model.addAttribute("curentCategory",categories);
+		model.addAttribute("ListCategoryChildOfCurentCategory",categoryChildByParentId(categories.getId()));
+		
+		return "customer/categoryProducts"; // -> đường dẫn tới View
+
+	}
+	
+	
+	
+	
 	@RequestMapping(value = {"/ajax/newsletter"},method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> ajax_contact(final Model model
 			,final HttpServletRequest request

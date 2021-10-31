@@ -2,6 +2,7 @@ package com.devpro.tshop.components;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.devpro.tshop.entities.Roles;
 import com.github.slugify.Slugify;
 
 public class Utilities {
@@ -15,6 +16,7 @@ public class Utilities {
 		String productTittleSeo = new Slugify().slugify(productTittle);
 		System.out.println(productTittleSeo);
 		//tạo mã hoá cho mật khẩu
-		System.out.println(new BCryptPasswordEncoder(13).encode("tuetn"));;
+		System.out.println(new BCryptPasswordEncoder(13).encode("tuetn"));
+
 	}
 }

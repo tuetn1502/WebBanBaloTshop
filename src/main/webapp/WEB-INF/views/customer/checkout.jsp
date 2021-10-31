@@ -24,19 +24,38 @@
 		
 			<div class="col-md-5 ">
 				<div><span><h4>Thông tin người nhận</h4></span></div>
-				
-	                <div class="form-group">
-	                    <input type="text" class="form-control" id="fullname" name="customerFullName"  placeholder="Họ và tên *" required>
-	                </div>
-	                <div class="form-group">
-	                    <input type="email" class="form-control" id="email" name="customerEmail" aria-describedby="emailHelp" placeholder="Email *" required>
-	                </div>
-	                <div class="form-group">
-	                    <input type="text" class="form-control" id="phone" name="customerPhone" placeholder="Số điện thoại *" required>
-	                </div>
-	                <div class="form-group">
-	                    <input type="text" class="form-control" id="address" name="customerAddress"  placeholder="Địa chỉ *" required>
-	                </div>
+					<c:if test="${isLogined }">
+		                <div class="form-group">
+		                    <input type="text" class="form-control " id="fullname" name="customerFullName"  placeholder="Họ và tên *" value="${userLogined.fullname }" disabled> 
+		                </div>
+		                <div class="form-group">
+		                    <input type="email" class="form-control" id="email" name="customerEmail" aria-describedby="emailHelp" value="${userLogined.id }" placeholder="Email *" disabled>
+		                </div>
+		                <div class="form-group">
+		                    <input type="email" class="form-control" id="email" name="customerEmail" aria-describedby="emailHelp" value="${userLogined.email }" placeholder="Email *" disabled>
+		                </div>
+		                <div class="form-group">
+		                    <input type="text" class="form-control" id="phone" name="customerPhone" placeholder="Số điện thoại *" value="${userLogined.phone }" disabled>
+		                </div>
+		                <div class="form-group">
+		                    <input type="text" class="form-control" id="address" name="customerAddress"  placeholder="Địa chỉ *" value="${userLogined.address }" disabled>
+		                </div>
+					</c:if>
+					<c:if test="${isLogined ==false }">
+	                	<div class="form-group">
+		                    <input type="text" class="form-control" id="fullname" name="customerFullName"  placeholder="Họ và tên *" required>
+		                </div>
+		                <div class="form-group">
+		                    <input type="email" class="form-control" id="email" name="customerEmail" aria-describedby="emailHelp" placeholder="Email *" required>
+		                </div>
+		                <div class="form-group">
+		                    <input type="text" class="form-control" id="phone" name="customerPhone" placeholder="Số điện thoại *" required>
+		                </div>
+		                <div class="form-group">
+		                    <input type="text" class="form-control" id="address" name="customerAddress"  placeholder="Địa chỉ *" required>
+		                </div>
+					</c:if>
+					
 	                <div class="form-group">
 	                    <textarea class="form-control" id="custom_note" rows="6" name="customerNote" placeholder="Ghi chú đơn hàng*" ></textarea>
 	                </div>
@@ -56,40 +75,76 @@
 			            <tbody>
 			            	
 							<c:forEach items="${cart.cartItems }" var="o">
-			                <tr class="table-light">
-			                    <td>
-			                        <div class="product-item">
-			                            <div class="product-info">
-			                                <h4 class="product-title"><a href="#" class="text-dark d-inline-block align-middle">${o.productName }</a></h4>
-			                            </div>
-			                        </div>
-			                    </td>
-			                    <td class="text-center">
-			                        <div class="count-input">
-			                            <strong>${o.quality }</strong>
-			                        </div>
-			                    </td>
-			                    <td class="text-center text-lg text-medium">
-			                    	<fmt:setLocale value="vi_VN" scope="session" />
-									<fmt:formatNumber value="${o.quality*o.priceUnit }" type="currency" />
-			                    </td>
-			                </tr>
+				                <tr class="table-light">
+				                    <td>
+				                        <div class="product-item">
+				                            <div class="product-info">
+				                                <h4 class="product-title"><a href="#" class="text-dark d-inline-block align-middle">${o.productName }</a></h4>
+				                            </div>
+				                        </div>
+				                    </td>
+				                    <td class="text-center">
+				                        <div class="count-input">
+				                            <strong>${o.quality }</strong>
+				                        </div>
+				                    </td>
+				                    <td class="text-center text-lg text-medium">
+				                    	<fmt:setLocale value="vi_VN" scope="session" />
+										<fmt:formatNumber value="${o.quality*o.priceUnit }" type="currency" />
+				                    </td>
+				                </tr>
 			                </c:forEach>
-			                <tr class="table-light">
-			                	<th>Tạm tính</th>
+			                <tr class="table-light ">
+			                	<th >Tạm tính</th>
 			                	<th></th>
-			                	<th>?</th>
+			                	<th class="text-center">
+			                		<fmt:setLocale value="vi_VN" scope="session" />
+									<fmt:formatNumber value="${cart.totalPrice }" type="currency" />
+			                	</th>
 			                </tr>
-			                <tr class="table-light">
-			                	<td>Phí Vận Chuyển</td>
-			                	<td></td>
-			                	<td>?</td>
-			                </tr>
-			                <tr class="table-light">
-			                	<th>Tổng cộng:</th>
-			                	<th></th>
-			                	<th>?</th>
-			                </tr>
+			                <c:if test="${cart.cartItems!=null }">
+			                	<tr class="table-light">
+				                	<td>Phí Vận Chuyển</td>
+				                	<td></td>
+				                	<td class="text-center">
+				                		<fmt:setLocale value="vi_VN" scope="session" />
+										<fmt:formatNumber value="${shipFee }" type="currency" />
+				                	</td>
+				                </tr>
+				                <tr class="table-light">
+				                	<th>Tổng cộng:</th>
+				                	<th></th>
+				                	<th class="text-center">
+				                		<div class="totalMoneyOfOrder" id="totalMoneyOfOrder">
+				                			<fmt:setLocale value="vi_VN" scope="session" />
+											<fmt:formatNumber value="${cart.totalPrice + shipFee }" type="currency" />
+				                		</div>
+				                		
+									</th>
+				                </tr>
+			                </c:if>
+			                <c:if test="${cart.cartItems ==null }">
+			                	<tr class="table-light">
+				                	<td>Phí Vận Chuyển</td>
+				                	<td></td>
+				                	<td class="text-center">
+				                		<fmt:setLocale value="vi_VN" scope="session" />
+										<fmt:formatNumber value="0" type="currency" />
+				                	</td>
+				                </tr>
+				                <tr class="table-light">
+				                	<th>Tổng cộng:</th>
+				                	<th></th>
+				                	<th class="text-center">
+				                		<div class="totalMoneyOfOrder" id="totalMoneyOfOrder">
+				                			<fmt:setLocale value="vi_VN" scope="session" />
+											<fmt:formatNumber value="0" type="currency" />
+				                		</div>
+				                		
+									</th>
+				                </tr>
+			                </c:if>
+			                
 			                
 			            </tbody>
 			        </table>
@@ -100,13 +155,13 @@
 				        </div>
 				        <div class="column ">
 				        	<select>
-				        		<option>Chọn phương thức thanh toánh</option>
+				        		<option>Chọn phương thức thanh toán</option>
 				        		<option>Thanh toán khi nhận hàng</option>
 				        	</select>
 				        </div>
 				    </div>
 			        <div class="text-center bg-light p-3">
-			        	<button class="btn btn-success" type="submit">Thanh toán</button>
+			        	<button class="btn btn-success" type="submit" id="saveOrder" >Thanh toán</button>
 			        </div>
 			    </div>
 			</div>

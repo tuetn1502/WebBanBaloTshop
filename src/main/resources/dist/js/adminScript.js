@@ -31,6 +31,22 @@ function deleteCategories(x,idCategory){
 		error: function(jqXhr,textStatus,errorMessage){}
 	});
 }
+function deleteAccount(x,idUser,seo){
+//	var tr = x.parentElement.parentElement;
+//	tr.remove();
+	var data={id: idUser};
+	jQuery.ajax({
+		url:"/admin/account/delete",
+		type:"post",
+		contentType:"application/json",
+		data:JSON.stringify(data),
+		success: function(jsonResult){
+			alert("Đã xoá!");
+			$('body').load('/admin/account/'+seo);
+		},
+		error: function(jqXhr,textStatus,errorMessage){}
+	});
+}
 $(document).ready(function() {
     $('#detail_description').summernote({
       placeholder: 'Enter content....',

@@ -24,7 +24,6 @@
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Đăng nhập</h4>
-<%-- 							<p class="alert-warning">${mess }</p> --%>
 							<form method="POST" class="my-login-validation" action="/perform_login" id="form_login">
 								<div class="form-group">
 									<input type="hidden" name="${_csrf.parameterName}"
@@ -67,9 +66,9 @@
 										Đăng nhập
 									</button>
 								</div>
-<!-- 								<div class="mt-4 text-center"> -->
-<%-- 									<a href="${base }/signup" type="button" class="btn btn-success btn-block">Đăng ký tài khoản học tập</a> --%>
-<!-- 								</div> -->
+								<div class="mt-4 text-center">
+									<a href="${base }/signup" type="button" class="btn btn-success btn-block">Đăng ký tài khoản</a>
+								</div>
 								<p style="font-size: 12px;" class="mt-2">Copyright © 2011-2018. All Rights Reserved by website.Design by TNT</p>
 							</form>
 						</div>

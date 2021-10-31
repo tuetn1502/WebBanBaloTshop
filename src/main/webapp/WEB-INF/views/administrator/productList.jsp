@@ -84,7 +84,8 @@
 									</td>
 									<td></td>
 									<td>${o.categories.name }</td>
-									<td>${o.status }</td>
+									<c:if test="${o.status == true }"><td>Còn hàng</td></c:if>
+									<c:if test="${o.status == false }"><td>Hết hàng</td></c:if>
 									<td class="d-flex"> 		
 										<a class="btn btn-outline-primary btn-sm py-2 form-control w-40" href="${base }/admin/product/edit/${o.id}"  ><i class="fas fa-edit"></i></a>
 										<!-- Button trigger modal -->

@@ -51,46 +51,65 @@
 	                </tr>
 	            </thead>
 	            <tbody >
-	            	
-					<c:forEach items="${cart.cartItems }" var="o">
-	                <tr class="table-light">
-	                    <td>
-	                        <div class="product-item">
-	                            <a class="product-thumb" ><img src="${base }/upload/${o.avatar}" alt="Product"></a>
-	                            <div class="product-info">
-	                                <h4 class="product-title"><a href="#" class="text-dark d-inline-block align-middle">${o.productName }</a></h4>
-	<!--                                 <span><em>Size:</em> 10.5</span> -->
-	<!--                                 <span><em>Color:</em> Dark Blue</span> -->
-	                            </div>
-	                        </div>
-	                    </td>
-	                    
-	                    <td class="text-center text-lg text-medium">
-	                    	<fmt:setLocale value="vi_VN" scope="session" />
-							<fmt:formatNumber value="${o.priceUnit }" type="currency" />
-	                    </td>
-	                    <td class="text-center">
-	                        <div class="count-input">
-	                            <strong>${o.quality }</strong>
-	                        </div>
-	                    </td>
-	                    <td class="text-center text-lg text-medium">
-	                    	<fmt:setLocale value="vi_VN" scope="session" />
-							<fmt:formatNumber value="${o.quality*o.priceUnit }" type="currency" />
-	                    </td>
-	                    <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>
-	                </tr>
-	                </c:forEach>
+	            	<c:if test="${cart.cartItems==null }">
+	            		<div class="alertCart"><h3>Không có sản phẩm nào trong giỏ hàng</h3></div>
+	            	</c:if>
+	            	<c:if test="${cart.cartItems!=null }">
+	            		<c:forEach items="${cart.cartItems }" var="o">
+			                <tr class="table-light">
+			                    <td>
+			                        <div class="product-item">
+			                            <a class="product-thumb" ><img src="${base }/upload/${o.avatar}" alt="Product"></a>
+			                            <div class="product-info">
+			                                <h4 class="product-title"><a href="#" class="text-dark d-inline-block align-middle">${o.productName }</a></h4>
+			<!--                                 <span><em>Size:</em> 10.5</span> -->
+			<!--                                 <span><em>Color:</em> Dark Blue</span> -->
+			                            </div>
+			                        </div>
+			                    </td>
+			                    
+			                    <td class="text-center text-lg text-medium">
+			                    	<fmt:setLocale value="vi_VN" scope="session" />
+									<fmt:formatNumber value="${o.priceUnit }" type="currency" />
+			                    </td>
+			                    <td class="text-center">
+			                        <div class="count-input">
+			                            <strong>${o.quality }</strong>
+			                        </div>
+			                    </td>
+			                    <td class="text-center text-lg text-medium">
+			                    	<fmt:setLocale value="vi_VN" scope="session" />
+									<fmt:formatNumber value="${o.quality*o.priceUnit }" type="currency" />
+			                    </td>
+			                    <td class="text-center"><a class="remove-from-cart" onclick="deleteCartItems(this,${o.productId})" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>
+			                </tr>
+		                </c:forEach>
+	            	</c:if>
+					
 	            </tbody>
 	        </table>
 	    </div>
 	    <div class="shopping-cart-footer">
 	        
-	        <div class="column text-lg">Tổng cộng: <span class="text-medium">$289.68</span></div>
+	        <div class="column text-lg">Tổng cộng: 
+	        	<c:if test="${cart.totalPrice!=null }">
+	        		<fmt:setLocale value="vi_VN" scope="session" />
+						<fmt:formatNumber value="${cart.totalPrice }" type="currency" />
+	        	</c:if>
+	        	<c:if test="${cart.totalPrice==null }">0</c:if>
+			</div>
 	    </div>
 	    <div class="shopping-cart-footer">
 	        <div class="column"><a class="btn btn-outline-secondary" href="${base }/homepage"><i class="icon-arrow-left"></i>&nbsp;Trở lại shop</a></div>
-	        <div class="column"><a class="btn btn-success" href="${base }/cart/checkout">Tiến hành đặt hàng</a></div>
+	        <div class="column">
+	        	<c:if test="${cart.cartItems!=null }">
+            		<a class="btn btn-success" href="${base }/cart/checkout">Tiến hành đặt hàng</a>
+            	</c:if>
+	        	<c:if test="${empty cart.cartItems }">
+            		<a class="btn btn-success" href="">Tiến hành đặt hàng</a>
+            	</c:if>
+	        	
+	        </div>
 	    </div>
 	<!-- Footer-->
 	<jsp:include page="/WEB-INF/views/customer/layout/footer.jsp"></jsp:include>

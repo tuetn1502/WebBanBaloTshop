@@ -162,12 +162,33 @@ public class ProductService extends BaseService<Products> {
 				sql += " and p.seo = '"+searchModel.getSeo()+"'";
 			}
 			// tìm kiếm sản phẩm hot
-//			if (searchModel.getIsHot() == false) {
+//			if (searchModel.getIsHot() == true) {
 //				sql += " and p.is_hot = '"+searchModel.getIsHot()+"'";
 //			}
 			if (!StringUtils.isEmpty(searchModel.getKeyword())) {
 				sql += " and (p.title like '%"+ searchModel.getKeyword()+"%'"+"or p.detail_description like '%"
 						+ searchModel.getKeyword() +"%'"+"or p.short_description like '%"+ searchModel.getKeyword()+ "%')";
+			}
+		}
+		return runTransactQuerySQL(sql, searchModel ==null?0:searchModel.getPage());	
+	}
+	public PagerData<Products> searchHome(ProductSearchModel searchModel){
+		//Khởi tạo câu truy vấn
+		String sql = "SELECT * FROM balotshop.tbl_products p WHERE 1=1";
+		if (searchModel != null) {
+			// tìm kiếm theo category
+			if (searchModel.getCategoryId() != null) {
+				sql += " and p.category_id = "+searchModel.getCategoryId();
+			}
+			if (!StringUtils.isEmpty(searchModel.getSeo())) {
+				sql += " and p.seo = '"+searchModel.getSeo()+"'";
+			}
+			// tìm kiếm sản phẩm hot
+//			if (searchModel.getIsHot() == true) {
+//				sql += " and p.is_hot = '"+searchModel.getIsHot()+"'";
+//			}
+			if (!StringUtils.isEmpty(searchModel.getKeyword())) {
+				sql += " and (p.title like '%"+ searchModel.getKeyword()+ "%')";
 			}
 		}
 		return runTransactQuerySQL(sql, searchModel ==null?0:searchModel.getPage());	
@@ -182,7 +203,20 @@ public class ProductService extends BaseService<Products> {
 				System.out.println(sql);
 			}
 		}
-		sql = sql+" order by p.id;";
+//		sql = sql+" order by p.id;";
+		return runTransactQuerySQL(sql, searchModel ==null?0:searchModel.getPage());	
+	}
+	public PagerData<Products> searchHotProduct(ProductSearchModel searchModel){
+		//Khởi tạo câu truy vấn
+		String sql = "SELECT * FROM balotshop.tbl_products p WHERE 1=1  and p.is_hot =true;";
+		if (searchModel != null) {
+			// tìm kiếm theo category
+			if (searchModel.getCategoryId() != null) {
+				sql += " and p.category_id = "+searchModel.getCategoryId();
+				System.out.println(sql);
+			}
+		}
+//		sql = sql+" order by p.id;";
 		return runTransactQuerySQL(sql, searchModel ==null?0:searchModel.getPage());	
 	}
 	
